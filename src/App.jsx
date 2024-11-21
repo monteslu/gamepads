@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-
+import Gamepad from './gamepad';
 function App() {
+
+  "abc".toLowerCase().includes('a');
   const [count, setCount] = useState(0);
   const requestRef = useRef();
 
@@ -38,6 +40,9 @@ function App() {
             >
               {gp.id}
             </div>
+            <div>
+              mapping: <span style={{ fontWeight: 'bold' }}>{gp.mapping}</span>
+            </div>
             <div style={{
               display: 'flex',
               width: '100%',
@@ -46,19 +51,33 @@ function App() {
               {gp.buttons.map((button, index) => (
                 <div
                   style={{
-                    width: '25px',
-                    height: '25px',
+                    width: '36px',
+                    height: '36px',
                     background: button.pressed ? 'red' : 'white',
+                    color: button.pressed ? 'white' : 'black',
                     display: 'flex',
+                    flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
                     border: '1px solid black',
                     borderRadius: '10%',
-                    margin: '5px',
+                    margin: '3px',
                   }}
                   key={index}
                 >
-                  {index}
+                  <div
+                    style={{
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      marginTop: '2px',
+                    }}
+                  >{index}</div>
+                  <div
+                    style={{
+                      fontSize: '10px',
+                      marginBottom: '2px',
+                    }}
+                  >{button.value.toFixed(2)}</div>
                 </div>
               ))}
             </div>
@@ -78,6 +97,11 @@ function App() {
                 </div>
               ))}
             </div>
+            {gp.mapping === 'standard' && (
+              <div>
+                <Gamepad gamepad={gp} />
+              </div>
+            )}
           </div>
         ))}
       </div>
